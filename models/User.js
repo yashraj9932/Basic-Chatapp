@@ -25,6 +25,7 @@ const UserSchema = new mongoose.Schema({
   phone: {
     type: String,
     maxlength: [20, "Phone number can not be longer than 20 characters"],
+    unique: true,
   },
   rooms: {
     type: [mongoose.Schema.ObjectId],

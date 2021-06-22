@@ -36,9 +36,9 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 });
 
 exports.registerUser = asyncHandler(async (req, res, next) => {
-  const { name, email, password, password2, phone } = req.body;
+  const { name, email, password, phone } = req.body;
 
-  if (!name || !email || !password || !password2 | !phone) {
+  if (!name || !email || !password || !phone) {
     return next(new ErrorResponse("Please provide all necessary details", 404));
   }
 

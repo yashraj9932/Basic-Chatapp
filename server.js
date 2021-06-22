@@ -13,6 +13,7 @@ dotenv.config({ path: "./config/config.env" });
 connectDB();
 
 const auth = require("./routes/auth");
+const room = require("./routes/room");
 const errorHandler = require("./middleware/error");
 const User = require("./models/User");
 
@@ -43,6 +44,7 @@ io.on("connection", (socket) => {
 });
 
 app.use("/auth", auth);
+app.use("/room", room);
 
 app.use(errorHandler);
 
