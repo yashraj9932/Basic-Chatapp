@@ -68,14 +68,13 @@ const AuthState = (props) => {
         body,
         config
       );
-      console.log("yash");
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
       });
       loadUser();
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       dispatch({
         type: REGISTER_FAIL,
         payload: error.response,

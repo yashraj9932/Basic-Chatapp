@@ -18,6 +18,8 @@ const Chat = () => {
     // eslint-disable-next-line
   }, []);
 
+  console.log(rooms);
+
   return (
     <div
       className="container"

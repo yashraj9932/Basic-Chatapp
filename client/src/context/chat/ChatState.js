@@ -14,7 +14,6 @@ const ChatState = (props) => {
   const getRooms = async () => {
     try {
       const res = await axios.get("http://localhost:5000/room/getrooms");
-      //   console.log(res.data);
       dispatch({
         type: GET_ALL,
         payload: res.data.data,
@@ -54,8 +53,6 @@ const ChatState = (props) => {
       },
     };
     try {
-      console.log(name);
-
       await axios.post(`http://localhost:5000/room/addRoom`, name, config);
     } catch (err) {
       dispatch({

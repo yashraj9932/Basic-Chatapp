@@ -44,7 +44,6 @@ exports.addUser = asyncHandler(async (req, res, next) => {
   }
 
   const person = await User.findOne({ phone: req.params.phone });
-  //   console.log(person);
 
   if (!person) {
     return next(new ErrorResponse("No such user on the database", 404));

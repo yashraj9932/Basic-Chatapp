@@ -20,19 +20,20 @@ const User = require("./models/User");
 app.use(express.json());
 app.use(cors());
 
+console.log();
+
+console.log("roomswala,databse2 times,localhost:5000 in context");
+console.log();
+
 io.on("connection", (socket) => {
   socket.on("join", (room) => {
-    console.log(room);
+    // console.log(room);
     socket.join(room);
 
-    console.log("User has joined the chat");
-    // console.log(msg);
+    // console.log("User has joined the chat");
   });
 
   socket.on("sendMessage", async (message, room, id, callback) => {
-    // console.log(message, room, id);
-    // console.log(user);
-    // io.to(socket.id).emit("message", message);
     // socket.join(room);
     io.to(room).emit("message", { from: id, text: message, Date: Date.now() });
     const user = await User.findById(id);
@@ -45,7 +46,7 @@ io.on("connection", (socket) => {
     callback();
   });
   socket.on("disconnect", () => {
-    console.log("User has left the chat");
+    // console.log("User has left the chat");
   });
 });
 

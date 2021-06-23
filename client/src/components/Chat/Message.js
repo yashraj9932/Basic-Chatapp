@@ -4,7 +4,6 @@ import AuthContext from "../../context/auth/authContext";
 const Message = ({ message }) => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  //   console.log(user._id, message.from);
   return (
     <div>
       <p style={user._id === message.from ? same : other}>{message.text}</p>

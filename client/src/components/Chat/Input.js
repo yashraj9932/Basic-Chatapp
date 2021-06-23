@@ -27,24 +27,25 @@ const Input = ({ ind }) => {
   useEffect(() => {
     socket.on("message", (message) => {
       setMessages([...messages, message]);
-      if (user._id === message.from) {
-        addMessage(message, rooms[ind]._id);
-      }
       setMessage("");
+
+      if (user._id === message.from && message !== "") {
+        addMessage(message, rooms[ind]._id);
+        message = "";
+      }
     });
 
     // socket.on("roomData", ({ users }) => {
     //   setUsers(users);
     // });
+
     // eslint-disable-next-line
   }, [messages]);
 
   const sendMessage = (e) => {
     e.preventDefault();
     if (message) {
-      socket.emit("sendMessage", message, rooms[ind]._id, user._id, () => {
-        console.log("Ghus gaya");
-      });
+      socket.emit("sendMessage", message, rooms[ind]._id, user._id, () => {});
     }
   };
 
@@ -55,7 +56,7 @@ const Input = ({ ind }) => {
     // eslint-disable-next-line
   }, [ind]);
 
-  console.log(messages);
+  // console.log(messages);
 
   const onAddUser = (e) => {
     addUser(phone, rooms[ind]._id);
