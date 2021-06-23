@@ -21,16 +21,22 @@ app.use(express.json());
 app.use(cors());
 
 io.on("connection", (socket) => {
-  socket.on("join", () => {
+  socket.on("join", (room) => {
+    console.log(room);
+    socket.join(room);
+
     console.log("User has joined the chat");
     // console.log(msg);
   });
 
-  socket.on("sendMessage", async (message, room, email, callback) => {
-    const user = await User.findOne({ email });
+  socket.on("sendMessage", async (message, room, id, callback) => {
+    // console.log(message, room, id);
     // console.log(user);
     // io.to(socket.id).emit("message", message);
-    io.to(room).emit("message", { user: user.name, text: message });
+    // socket.join(room);
+    io.to(room).emit("message", { from: id, text: message, Date: Date.now() });
+    const user = await User.findById(id);
+
     // io.to(user.room).emit("roomData", {
     //   room: user.room,
     //   users: getUsersInRoom(user.room),
@@ -38,9 +44,9 @@ io.on("connection", (socket) => {
 
     callback();
   });
-  // socket.on("disconnect", () => {
-  //   console.log("User has left the chat");
-  // });
+  socket.on("disconnect", () => {
+    console.log("User has left the chat");
+  });
 });
 
 app.use("/auth", auth);

@@ -27,12 +27,94 @@ const ChatState = (props) => {
     }
   };
 
+  const addMessage = async (message, roomId) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      await axios.post(
+        `http://localhost:5000/room/message/${roomId}`,
+        message,
+        config
+      );
+    } catch (err) {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err,
+      });
+    }
+  };
+
+  const addRoom = async (name) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      console.log(name);
+
+      await axios.post(`http://localhost:5000/room/addRoom`, name, config);
+    } catch (err) {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err,
+      });
+    }
+  };
+
+  const addUser = async (phone, roomId) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      await axios.post(
+        `http://localhost:5000/room/addUser/${roomId}/${phone}`,
+        {},
+        config
+      );
+    } catch (err) {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err,
+      });
+    }
+  };
+
+  const deleteAllMessage = async (roomId) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      await axios.put(
+        `http://localhost:5000/room/message/${roomId}`,
+        {},
+        config
+      );
+    } catch (err) {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err,
+      });
+    }
+  };
+
   return (
     <ChatContext.Provider
       value={{
         rooms: state.rooms,
         error: state.error,
         getRooms,
+        addMessage,
+        deleteAllMessage,
+        addRoom,
+        addUser,
       }}
     >
       {props.children}

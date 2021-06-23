@@ -139,3 +139,34 @@ exports.getRooms = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ success: true, data: user.rooms });
 });
+
+exports.deleteMessage = asyncHandler(async (req, res, next) => {
+  const room = await Room.findById(req.params.id);
+  if (!room) {
+    return next(new ErrorResponse("Room doesnt not exist", 404));
+  }
+
+  var f = -1,
+    i;
+  for (i = 0; i < room.users.length; i++) {
+    if (req.user.id.toString() == room.users[i].toString()) {
+      f = i;
+      break;
+    }
+  }
+  if (f == -1) {
+    return next(new ErrorResponse("User is not in the room", 400));
+  }
+
+  const ress = await Room.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: { messages: [] },
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  res.status(200).json({ success: true, data: ress });
+});
