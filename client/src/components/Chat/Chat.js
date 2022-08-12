@@ -15,6 +15,7 @@ const Chat = () => {
 
   useEffect(() => {
     getRooms();
+    // window.location.reload();
     // eslint-disable-next-line
   }, []);
 
